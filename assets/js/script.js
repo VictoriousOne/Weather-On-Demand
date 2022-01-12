@@ -1,13 +1,22 @@
 var cityData = {
     name : "",
     temp : "",
-    wind : "",
     humidity : "",
     windSpeed : "",
     longitude : "",
     latitude : "",
     uvIndex : ""
 };
+
+
+function displayWeather() {
+
+    $("#temp").text("Temp : " + cityData.temp);
+    $("#wind").text("Wind : " + cityData.windSpeed);
+    $("#humidity").text("Humidity : " + cityData.humidity);
+    $("#uv").text("UV Index : " + cityData.uvIndex);
+}
+
 
 function getCityUV(cLon, cLat) {
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + cLat + "&lon=" + cLon + "&exclude=hourly,daily&appid=e63493ef81c38e6756f2b8a60370d8ef&units=imperial";
@@ -18,6 +27,7 @@ function getCityUV(cLon, cLat) {
             if (response.ok) {
                 response.json().then(function (data) {
                    cityData.uvIndex = data.current.uvi;
+                   displayWeather();
                     
                     console.log(data);
                 });
@@ -43,7 +53,7 @@ function getCityData(cName) {
                 response.json().then(function (data) {
                     cityData.name = cName;
                     cityData.temp = data.main.temp;
-                    cityData.wind = data.wind.speed;
+                    cityData.windSpeed = data.wind.speed;
                     cityData.humidity = data.main.humidity;
                     cityData.longitude = data.coord.lon;
                     cityData.latitude = data.coord.lat;
