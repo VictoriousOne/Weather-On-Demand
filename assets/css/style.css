@@ -505,4 +505,23 @@
       border: 2px solid black;
   }
   
-  
+  #day1, #day2, #day3, #day4, #day5 {
+    border : 1px solid black;
+    margin : 10px;
+    padding : 10px;
+
+  }
+
+  .daily {
+    border : 1px solid black;
+    margin : 10px;
+    padding : 10px;
+    background-color: mediumblue;
+    
+
+  }
+
+  p {
+    font-size: x-small;
+    color:white;
+  }
