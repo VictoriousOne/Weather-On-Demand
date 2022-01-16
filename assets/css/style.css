@@ -543,3 +543,8 @@
   #uv {
     display: inline-block;
   }
+
+  .fiveDayDate {
+    font-weight: 800;
+    font-size: medium;
+  }
