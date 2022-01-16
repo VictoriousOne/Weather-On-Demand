@@ -541,10 +541,16 @@
   }
 
   #uv {
-    display: inline-block;
+    color: white;
+    font-weight: 800;
   }
 
   .fiveDayDate {
     font-weight: 800;
     font-size: medium;
+  }
+
+  .fiveDay {
+    font-size: medium;
+    font-weight: 500;
   }

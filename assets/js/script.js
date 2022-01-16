@@ -64,9 +64,9 @@ function fiveDay() {
                         myDate = moment().add(cntr, 'days').format("MM/DD/YYYY");
                         dailyDiv.append($("<p>").text(myDate).attr("class", "fiveDayDate"));
                         dailyDiv.append($("<img>").attr("src", weatherIcon));
-                        dailyDiv.append($("<p>").text("Temp: " + data.daily[i].temp.day + " F"));
-                        dailyDiv.append($("<p>").text("Wind: " + data.daily[i].wind_speed + " MPH"));
-                        dailyDiv.append($("<p>").text("Humidity: " + data.daily[i].humidity + " %"));
+                        dailyDiv.append($("<p>").text("Temp: " + data.daily[i].temp.day + " F").attr("class", "fiveDay"));
+                        dailyDiv.append($("<p>").text("Wind: " + data.daily[i].wind_speed + " MPH").attr("class", "fiveDay"));
+                        dailyDiv.append($("<p>").text("Humidity: " + data.daily[i].humidity + " %").attr("class", "fiveDay"));
                         $("#5Day").append(dailyDiv);
                         cntr++;
                     }
@@ -94,7 +94,10 @@ function displayWeather() {
     $("#temp").text("Temp : " + cityData.temp + " F");
     $("#wind").text("Wind : " + cityData.windSpeed + " MPH");
     $("#humidity").text("Humidity : " + cityData.humidity + " %");
+    //$("#uvI").text("UV Index : ");
     $("#uv").text(cityData.uvIndex);
+    //console.log(cityData.uvIndex);
+    $("#fiveDayHeading").text("5-Day Forecast");
 
     if (parseInt(cityData.uvIndex) <= 2) {
         $("#uv").attr("class", "low");
@@ -193,5 +196,6 @@ function getCityName(event) {
 
 
 loadHistory();
+$("#cityanddate").text(moment().format("MM/DD/YYYY"));
 $("#city-form").on("submit", getCityName);
 $("#history").on("click", "button", getCityName);
