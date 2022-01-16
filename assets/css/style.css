@@ -1,9 +1,9 @@
 :root {
-    --primary: #ccdad1;
-    --secondary: #9caea9;
-    --tertiary: #788585;
-    --light-dark: #6f6866;
-    --dark: #38302e;
+    --primary: #A6D9F2;
+    --secondary: #136086;
+    --tertiary: #2070DF;
+    --light-dark: #4DB2E5;
+    --dark: #1A7FB3;
     --border-radius: .3rem;
   }
   
@@ -110,7 +110,7 @@
     display: inline-block;
     border-radius: var(--border-radius);
     box-shadow: 6px 5px var(--light-dark);
-    align-self: center;
+    text-align: center;
   }
   
   .list-group {
@@ -505,18 +505,12 @@
       border: 2px solid black;
   }
   
-  #day1, #day2, #day3, #day4, #day5 {
-    border : 1px solid black;
-    margin : 10px;
-    padding : 10px;
-
-  }
-
+  
   .daily {
     border : 1px solid black;
     margin : 10px;
     padding : 10px;
-    background-color: mediumblue;
+    background-color: #2070DF;
     
 
   }
@@ -524,4 +518,28 @@
   p {
     font-size: x-small;
     color:white;
+  }
+
+  .low {
+    background-color: green;
+  }
+
+  .moderate {
+    background-color: yellow;
+  }
+
+  .high {
+    background-color: orange;
+  }
+
+  .veryHigh {
+    background-color: red;
+  }
+
+  header {
+    align-items: center;
+  }
+
+  #uv {
+    display: inline-block;
   }

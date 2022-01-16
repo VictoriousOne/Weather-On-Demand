@@ -5,14 +5,23 @@ var cityData = {
     windSpeed : "",
     longitude : "",
     latitude : "",
-    uvIndex : ""
+    uvIndex : "",
+    condition: ""
 };
+
+var dailyDiv;
 
 function fiveDay() {
 
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + cityData.latitude + "&lon=" + cityData.longitude + "&exclude=hourly,current,minutely,alerts&appid=e63493ef81c38e6756f2b8a60370d8ef&units=imperial&cnt=5";
 
     var myDate = moment().format('DD/MM/YYYY');
+
+   /* if (($(".daily").length)) {
+        $(".daily").remove();
+    }*/
+    var weatherIcon;
+    $(".daily").remove();
     fetch(apiUrl)
         .then(function (response) {
             // request was successful
@@ -21,12 +30,15 @@ function fiveDay() {
                    console.log(data);
                     cntr = 1;
                    for (var i = 0; i < 5; i++) {
-                       var dailyDiv = $("<div>").attr("class", "daily");
+                       console.log("The weather code is " + data.daily[i].weather[0].icon);
+                       weatherIcon = "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png";
+                       dailyDiv = $("<div>").attr("class", "daily");
                        myDate = moment().add(cntr, 'days').format("MM/DD/YYYY");
                        dailyDiv.append($("<p>").text(myDate));
-                       dailyDiv.append($("<p>").text("Temp: " + data.daily[i].temp.day));
-                       dailyDiv.append($("<p>").text("Wind: " + data.daily[i].wind_speed));
-                       dailyDiv.append($("<p>").text("Humidity: " + data.daily[i].humidity));
+                       dailyDiv.append($("<img>").attr("src", weatherIcon));
+                       dailyDiv.append($("<p>").text("Temp: " + data.daily[i].temp.day + " F"));
+                       dailyDiv.append($("<p>").text("Wind: " + data.daily[i].wind_speed + " MPH"));
+                       dailyDiv.append($("<p>").text("Humidity: " + data.daily[i].humidity + " %"));
                        $("#5Day").append(dailyDiv);
                        cntr++;
                    }
@@ -40,16 +52,33 @@ function fiveDay() {
             // Notice this `.catch()` getting chained onto the end of the `.then()` method
             alert("Unable to connect to endpoint");
         });
-
+        $("#cityname").val = "";
 }
 
 
 function displayWeather() {
 
-    $("#temp").text("Temp : " + cityData.temp);
-    $("#wind").text("Wind : " + cityData.windSpeed);
-    $("#humidity").text("Humidity : " + cityData.humidity);
-    $("#uv").text("UV Index : " + cityData.uvIndex);
+    var weatherIcon = "http://openweathermap.org/img/wn/" + cityData.condition + ".png"
+    console.log(cityData.condition);
+    $("#cityanddate").text(cityData.name + " (" + moment().format("MM/DD/YYYY") + ")");
+    $("#cond").attr("src", weatherIcon);
+    $("#temp").text("Temp : " + cityData.temp +  " F");
+    $("#wind").text("Wind : " + cityData.windSpeed + " MPH");
+    $("#humidity").text("Humidity : " + cityData.humidity + " %");
+    $("#uv").text(cityData.uvIndex);
+
+    if (parseInt(cityData.uvIndex) <= 2) {
+        $("#uv").attr("class", "low");
+    }
+    else if ((parseInt(cityData.uvIndex) >= 3) && (parseInt(cityData.uvIndex) <= 5)) {
+        $("#uv").attr("class", "moderate");
+    }
+    else if ((parseInt(cityData.uvIndex) >= 6) && (parseInt(cityData.uvIndex) <= 7)) {
+        $("#uv").attr("class", "high");
+    }
+    else if ((parseInt(cityData.uvIndex) >= 8) && (parseInt(cityData.uvIndex) <= 10)) {
+        $("#uv").attr("class", "veryHigh");
+    }
     fiveDay();
 }
 
@@ -93,9 +122,11 @@ function getCityData(cName) {
                     cityData.humidity = data.main.humidity;
                     cityData.longitude = data.coord.lon;
                     cityData.latitude = data.coord.lat;
+                    cityData.condition = data.weather[0].icon;
+                    
                     getCityUV(cityData.longitude, cityData.latitude);
 
-                    //console.log(data);
+                    console.log(data);
                 });
             } else {
                 alert('Error: City not found');
@@ -116,8 +147,7 @@ function getCityName(event) {
 
     if (cityname) {
         getCityData(cityname);
-        (cityname);
-        $("#cityname").val = "";
+        $("#cityname").val("");
     
     }
 
